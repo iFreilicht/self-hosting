@@ -29,6 +29,8 @@ services:
       - NGINX_PROXY_CONTAINER=proxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      # This wasn't in the tutorial, but seems to have fixed the certificate issues
+      - certs:/etc/nginx/certs:rw
     volumes_from:
       - "proxy"
     depends_on:
