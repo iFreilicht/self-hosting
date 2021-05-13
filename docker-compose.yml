@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-
+# --- Base services
   proxy:
     image: jwilder/nginx-proxy
     container_name: proxy
@@ -52,6 +52,40 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "9000:9000"
+
+# --- Nextcloud
+  nextcloud:
+    image: nextcloud
+    container_name: nextcloud
+    restart: always
+    environment:
+      - MYSQL_HOST=nextcloud-database
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud_database_user
+      - MYSQL_PASSWORD=nextcloud_database_password
+      - VIRTUAL_HOST=cloud.uhl.cx
+      - LETSENCRYPT_HOST=cloud.uhl.cx
+      - LETSENCRYPT_EMAIL=letsencrypt@mail.felix-uhl.de
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /mnt/nextcloud-storage/nextcloud:/var/www/html
+    ports:
+      - "8080:80"
+    links:
+      - nextcloud-database
+
+  nextcloud-database:
+    image: mariadb:10.3.22 # See https://github.com/nextcloud/docker/issues/1038
+    container_name: nextcloud-database
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    environment:
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud_database_user
+      - MYSQL_PASSWORD=nextcloud_database_password
+      - MYSQL_ROOT_PASSWORD=nextcloud_database_root_password
+    volumes:
+      - /mnt/nextcloud-storage/database:/var/lib/mysql
 
 volumes:
   certs:
