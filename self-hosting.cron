@@ -1,0 +1,2 @@
+# Nextcloud system cronjob (Settings -> Administration -> Basic settings -> Background jobs -> Cron)
+*/5 * * * * docker exec -u www-data nextcloud php cron.php
