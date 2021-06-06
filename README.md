@@ -6,7 +6,6 @@ Files for setting up my self-hosted infrastructure
 
 1. Run `cp .env.sample .env`
 2. Fill in the `.env` file. The exact values don't matter, but the passwords should be long and randomized
-3. Run `crontab self-hosting.cron` to install the required cronjobs
 
 ## Start
 

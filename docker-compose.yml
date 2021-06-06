@@ -87,6 +87,20 @@ services:
     volumes:
       - /mnt/nextcloud-storage/database:/var/lib/mysql
 
+  nextcloud-cron:
+    image: rcdailey/nextcloud-cronjob
+    container_name: nextcloud-cron
+    restart: always
+    network_mode: none
+    depends_on:
+    - nextcloud
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    - /etc/localtime:/etc/localtime:ro
+    environment:
+    - NEXTCLOUD_CONTAINER_NAME=nextcloud
+    - NEXTCLOUD_CRON_MINUTE_INTERVAL=5
+
 volumes:
   certs:
   vhost.d:
