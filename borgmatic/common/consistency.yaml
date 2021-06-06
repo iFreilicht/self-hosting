@@ -1,0 +1,5 @@
+checks:
+    - repository
+    - archives
+check_last: 3
+prefix: 'backup-'

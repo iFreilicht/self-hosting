@@ -1,0 +1,14 @@
+location:
+    source_directories:
+        - /mnt/source/
+    repositories:
+        - <ID>@<ID>.repo.borgbase.com:repo
+
+storage:
+    !include /etc/borgmatic.d/common/storage.yaml
+
+retention:
+    !include /etc/borgmatic.d/common/retention.yaml
+
+consistency:
+    !include /etc/borgmatic.d/common/consistency.yaml

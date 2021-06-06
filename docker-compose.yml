@@ -86,6 +86,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${NEXTCLOUD_DATABASE_ROOT_PASSWORD:?set in .env}
     volumes:
       - /mnt/nextcloud-storage/database:/var/lib/mysql
+      - nextcloud-run-mysqld:/run/mysqld/
 
   nextcloud-cron:
     image: rcdailey/nextcloud-cronjob
@@ -101,10 +102,33 @@ services:
     - NEXTCLOUD_CONTAINER_NAME=nextcloud
     - NEXTCLOUD_CRON_MINUTE_INTERVAL=5
 
+# --- Backups
+  borgmatic:
+    build: # Build our modified image
+      context: borgmatic
+      args:
+        - MYSQL_USER=${NEXTCLOUD_DATABASE_USER:?set in .env}
+        - MYSQL_PASSWORD=${NEXTCLOUD_DATABASE_PASSWORD:?set in .env}
+    container_name: borgmatic
+    volumes:
+      - /mnt/nextcloud-storage/nextcloud:/mnt/source/nextcloud:ro
+      - ./borgmatic:/etc/borgmatic.d/
+      - /root/.config/borg:/root/.config/borg
+      - /root/.ssh:/root/.ssh
+      - /root/.cache/borg:/root/.cache/borg
+      # For database backup
+      - nextcloud-run-mysqld:/run/mysqld/
+    environment:
+      - TZ=${TZ:?set in .env}
+      - BORG_PASSPHRASE=${BORG_PASSPHRASE:?set in .env}
+
+
+
 volumes:
   certs:
   vhost.d:
   html:
+  nextcloud-run-mysqld:
 
 networks:
   proxy-tier:

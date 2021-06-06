@@ -1,0 +1,18 @@
+location:
+    source_directories: []
+    repositories:
+        - <ID>@<ID>.repo.borgbase.com:repo
+    one_file_system: true
+
+hooks:
+    mysql_databases:
+        - name: nextcloud
+
+storage:
+    !include /etc/borgmatic.d/common/storage.yaml
+
+retention:
+    !include /etc/borgmatic.d/common/retention.yaml
+
+consistency:
+    !include /etc/borgmatic.d/common/consistency.yaml
