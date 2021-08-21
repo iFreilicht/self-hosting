@@ -154,6 +154,7 @@ services:
     container_name: borgmatic
     volumes:
       - /mnt/nextcloud-storage/nextcloud:/mnt/source/nextcloud:ro
+      - ./.env:/mnt/source/self-hosting/.env
       - ./borgmatic:/etc/borgmatic.d/
       - /root/.config/borg:/root/.config/borg
       - /root/.ssh:/root/.ssh
