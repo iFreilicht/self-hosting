@@ -15,8 +15,8 @@ services:
       - html:/usr/share/nginx/html
       - ./uploadsize.conf:/etc/nginx/conf.d/uploadsize.conf:ro
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     networks:
       - "default"
       - "proxy-tier"
@@ -51,7 +51,8 @@ services:
       - ../portainer/:/data
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - "9000:9000"
+      - 9000:9000
+
 
 # --- Nextcloud
   nextcloud:
@@ -70,7 +71,7 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /mnt/nextcloud-storage/nextcloud:/var/www/html
     ports:
-      - "8080:80"
+      - 8080:80
     links:
       - nextcloud-database
 
@@ -94,13 +95,14 @@ services:
     restart: always
     network_mode: none
     depends_on:
-    - nextcloud
+      - nextcloud
     volumes:
-    - /var/run/docker.sock:/var/run/docker.sock:ro
-    - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/localtime:/etc/localtime:ro
     environment:
-    - NEXTCLOUD_CONTAINER_NAME=nextcloud
-    - NEXTCLOUD_CRON_MINUTE_INTERVAL=5
+      - NEXTCLOUD_CONTAINER_NAME=nextcloud
+      - NEXTCLOUD_CRON_MINUTE_INTERVAL=5
+
 
 # --- Smaller, self-contained services
   snapdrop:
