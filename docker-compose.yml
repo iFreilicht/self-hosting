@@ -102,6 +102,24 @@ services:
     - NEXTCLOUD_CONTAINER_NAME=nextcloud
     - NEXTCLOUD_CRON_MINUTE_INTERVAL=5
 
+# --- Smaller, self-contained services
+  snapdrop:
+    image: ghcr.io/linuxserver/snapdrop
+    container_name: snapdrop
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+      - VIRTUAL_HOST=drop.uhl.cx
+      - LETSENCRYPT_HOST=drop.uhl.cx
+      - LETSENCRYPT_EMAIL=letsencrypt@mail.felix-uhl.de
+    volumes:
+      - ../snapdrop:/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 8081:80
+      - 4431:443
+
+
 # --- Backups
   borgmatic:
     build: # Build our modified image
