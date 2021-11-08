@@ -1,5 +1,6 @@
 checks:
-    - repository
-    - archives
+    # Health checks take very long for big repositories, so they should only be done once a month
+    - disabled
+# These options are used when `borgmatic check` is run
 check_last: 3
 prefix: 'backup-'
