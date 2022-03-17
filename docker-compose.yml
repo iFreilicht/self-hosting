@@ -40,7 +40,7 @@ services:
       - "proxy-tier"
 
   portainer:
-    image: portainer/portainer
+    image: portainer/portainer:1.24.1  # Latest "historic" version of portainer before CE and BE
     container_name: portainer
     restart: always
     environment:
