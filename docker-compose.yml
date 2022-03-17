@@ -106,7 +106,7 @@ services:
 
 # --- Smaller, self-contained services
   snapdrop:
-    image: ghcr.io/linuxserver/snapdrop
+    image: linuxserver/snapdrop
     container_name: snapdrop
     restart: unless-stopped
     environment:
@@ -122,7 +122,7 @@ services:
       - 4431:443
 
   transmission:
-    image: ghcr.io/linuxserver/transmission
+    image: linuxserver/transmission
     container_name: transmission
     restart: unless-stopped
     environment:
