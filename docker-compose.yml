@@ -56,7 +56,8 @@ services:
 
 # --- Nextcloud
   nextcloud:
-    image: nextcloud
+    build: # Build our modified image
+      context: nextcloud
     container_name: nextcloud
     restart: always
     environment:
