@@ -69,6 +69,8 @@ services:
       - LETSENCRYPT_HOST=cloud.uhl.cx
       - LETSENCRYPT_EMAIL=letsencrypt@mail.felix-uhl.de
     volumes:
+      - type: tmpfs
+        target: /tmp
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /mnt/nextcloud-storage/nextcloud:/var/www/html
     ports:
