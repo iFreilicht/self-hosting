@@ -68,6 +68,7 @@ services:
       - VIRTUAL_HOST=cloud.uhl.cx
       - LETSENCRYPT_HOST=cloud.uhl.cx
       - LETSENCRYPT_EMAIL=letsencrypt@mail.felix-uhl.de
+      - PHP_MEMORY_LIMIT=4G
     volumes:
       - type: tmpfs
         target: /tmp
