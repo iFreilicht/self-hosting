@@ -109,6 +109,21 @@ services:
 
 
 # --- Smaller, self-contained services
+  kritzeln:
+    build: # Build our modified image
+      context: kritzeln
+    container_name: kritzeln
+    restart: always
+    environment:
+      - VIRTUAL_HOST=kritzeln.uhl.cx
+      - LETSENCRYPT_HOST=kritzeln.uhl.cx
+      - LETSENCRYPT_EMAIL=letsencrypt@mail.felix-uhl.de
+    ports:
+      - 8082:8080
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+
   snapdrop:
     image: linuxserver/snapdrop
     container_name: snapdrop
