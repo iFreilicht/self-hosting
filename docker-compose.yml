@@ -80,7 +80,7 @@ services:
       - nextcloud-database
 
   nextcloud-database:
-    image: mariadb:10.3.22 # See https://github.com/nextcloud/docker/issues/1038
+    image: mariadb:10
     container_name: nextcloud-database
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW

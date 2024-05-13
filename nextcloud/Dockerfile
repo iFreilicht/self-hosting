@@ -1,4 +1,4 @@
-FROM nextcloud:stable
+FROM nextcloud:27
 
 RUN apt update
 # Install extra codecs to enable SVG support in web interface, see https://github.com/nextcloud/server/issues/24710
