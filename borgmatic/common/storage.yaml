@@ -1,2 +1,0 @@
-compression: lz4
-archive_name_format: 'backup-{now}'

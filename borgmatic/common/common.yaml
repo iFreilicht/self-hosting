@@ -1,0 +1,11 @@
+compression: lz4
+archive_name_format: 'backup-{now}'
+
+keep_hourly: 3
+keep_daily: 7
+keep_weekly: 4
+keep_monthly: 6
+keep_yearly: 10
+
+# These options are used when `borgmatic check` is run
+check_last: 3
