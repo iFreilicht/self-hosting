@@ -11,6 +11,7 @@ Files for setting up my self-hosted infrastructure
 5. Create two remote borg repositories with the key you just created, and initialize them `borg init -e repokey-blake2 <ID>@<ID>.repo.borgbase.com:repo`
 6. When asked for a passphrase, use the same for both. Make sure to store it somewhere safe and edit `BORG_PASSPHRASE` in `.env`.
 7. Back up the borg key for both repos and store it somewhere safe! `borg key export <ID>@<ID>.repo.borgbase.com:repo ~/borg-key`
+8. Symlink the files in the etc/ directory or copy them to their destination
 
 ## Start
 
