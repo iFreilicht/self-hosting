@@ -1,7 +1,7 @@
 source_directories:
   - /mnt/source/
 repositories:
-  - path: ssh://cx1479ha@cx1479ha.repo.borgbase.com/./repo
-    label: server1.uhl.cx - files
+  - path: ssh://<ID>@<ID>.repo.borgbase.com/./repo
+    label: example.com - files
 
 <<: !include /etc/borgmatic.d/common/common.yaml
