@@ -53,6 +53,61 @@ services:
     ports:
       - 9000:9000
 
+
+# --- Nextcloud
+  nextcloud:
+    build: # Build our modified image
+      context: nextcloud
+    container_name: nextcloud
+    restart: always
+    environment:
+      - MYSQL_HOST=nextcloud-database
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=${NEXTCLOUD_DATABASE_USER}
+      - MYSQL_PASSWORD=${NEXTCLOUD_DATABASE_PASSWORD}
+      - VIRTUAL_HOST=cloud.uhl.cx
+      - LETSENCRYPT_HOST=cloud.uhl.cx
+      - LETSENCRYPT_EMAIL=letsencrypt@mail.felix-uhl.de
+      - PHP_MEMORY_LIMIT=4G
+    volumes:
+      - type: tmpfs
+        target: /tmp
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /mnt/nextcloud-storage/nextcloud:/var/www/html
+    ports:
+      - 8080:80
+    links:
+      - nextcloud-database
+
+  nextcloud-database:
+    image: mariadb:10
+    container_name: nextcloud-database
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    environment:
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=${NEXTCLOUD_DATABASE_USER}
+      - MYSQL_PASSWORD=${NEXTCLOUD_DATABASE_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${NEXTCLOUD_DATABASE_ROOT_PASSWORD}
+    volumes:
+      - /mnt/nextcloud-storage/database:/var/lib/mysql
+      - nextcloud-run-mysqld:/run/mysqld/
+
+  nextcloud-cron:
+    image: rcdailey/nextcloud-cronjob
+    container_name: nextcloud-cron
+    restart: always
+    network_mode: none
+    depends_on:
+      - nextcloud
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - NEXTCLOUD_CONTAINER_NAME=nextcloud
+      - NEXTCLOUD_CRON_MINUTE_INTERVAL=5
+
+
 # --- Smaller, self-contained services
   transmission:
     image: linuxserver/transmission
